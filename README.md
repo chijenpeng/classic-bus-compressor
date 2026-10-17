@@ -1,9 +1,11 @@
 # Classic Bus Compressor
 
 Inspired by the SSL 4000 G bus compressor.<br>
-Part of our legacy collection: recreations built from schematics where available, with extremely high CPU use in the heaviest models. They're legacy now, but we still think they sound pretty great.
+Part of the codycodie legacy release collection.
 
 Classic Bus Compressor is a stereo VCA bus compressor plug-in built with JUCE 8 for AU and VST3. Its schematic-based DSP follows the compressor sections of the SSL 82E26 and 82E27 circuit drawings, with idealized device equations and plug-in extensions. It is not a component-exact recreation of a particular SSL unit.
+
+![Classic Bus Compressor interface](docs/editor.png)
 
 This release has its own plug-in identity (`com.c0dypeng.classicbuscompressor`) so it can coexist with the original G Bus Compressor plug-in. Parameter IDs, order, ranges and defaults, along with the `SslBusState` saved-state root, remain stable for existing sessions and presets.
 
@@ -29,8 +31,6 @@ ctest --test-dir build --output-on-failure
 If `JUCE_SOURCE_DIR` is omitted, CMake uses `third_party/JUCE`, or fetches JUCE 8.0.9.
 Plug-in copying is disabled by default. To copy AU and VST3 bundles into the current user's audio
 plug-in folders, explicitly configure with `-DCOPY_PLUGIN_AFTER_BUILD=ON`.
-
-![Classic Bus Compressor interface](docs/editor.png)
 
 ## Controls
 
