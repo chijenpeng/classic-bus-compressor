@@ -105,17 +105,10 @@ void SslBusProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::Midi
     const auto* sideLeft = c.externalSidechain ? side.getReadPointer (0) : nullptr;
     const auto* sideRight = c.externalSidechain && side.getNumChannels() > 1 ? side.getReadPointer (1) : sideLeft;
     for (int i = 0; i < samples; ++i)
-    {
-        sslbus::Frame dry { left[i], right != nullptr ? right[i] : left[i] };
-        sslbus::Frame key { sideLeft != nullptr ? sideLeft[i] : dry.left,
-                            sideRight != nullptr ? sideRight[i] : dry.right };
-        const auto wet = compressor.process (dry, key);
-        left[i] = wet.left;
-        if (right != nullptr)
-            right[i] = wet.right;
-        inPeak = std::max ({ inPeak, std::abs (dry.left), std::abs (dry.right) });
-        outPeak = std::max ({ outPeak, std::abs (wet.left), std::abs (wet.right) });
-    }
+        inPeak = std::max ({ inPeak, std::abs (left[i]), std::abs (right != nullptr ? right[i] : left[i]) });
+    compressor.process (left, right, sideLeft, sideRight, samples);
+    for (int i = 0; i < samples; ++i)
+        outPeak = std::max ({ outPeak, std::abs (left[i]), std::abs (right != nullptr ? right[i] : left[i]) });
     inputPeak.store (inPeak, std::memory_order_relaxed);
     outputPeak.store (outPeak, std::memory_order_relaxed);
     gainReduction.store (c.enabled ? compressor.gainReductionDb() : 0.0f, std::memory_order_relaxed);

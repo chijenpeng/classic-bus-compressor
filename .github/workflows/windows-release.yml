@@ -6,7 +6,7 @@ on:
       tag:
         description: Existing draft release tag to build and upload to
         required: true
-        default: v0.1.0
+        default: v0.2.0
         type: string
 
 jobs:
@@ -70,6 +70,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path $packageRoot, $licenses, $vst3Licenses | Out-Null
           Copy-Item -LiteralPath $plugin -Destination (Join-Path $packageRoot "Classic Bus Compressor.vst3") -Recurse
           Copy-Item -LiteralPath README.md -Destination $packageRoot
+          Copy-Item -LiteralPath THIRD_PARTY_NOTICES.md -Destination $packageRoot
           Copy-Item -LiteralPath Resources/fonts/Inter-LICENSE.txt -Destination $licenses
           Copy-Item -LiteralPath Resources/fonts/JetBrainsMono-LICENSE.txt -Destination $licenses
           $juce = Join-Path $env:RUNNER_TEMP "deps/juce-src"

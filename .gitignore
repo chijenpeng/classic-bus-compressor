@@ -2,4 +2,4 @@ build*/
 /dist/
 dist/auditions/
 .DS_Store
-third_party/JUCE/
+third_party/JUCE
