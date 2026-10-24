@@ -36,8 +36,8 @@ Packages:
 - macOS Universal: AU and VST3, arm64 + x86_64; ad-hoc signed, not notarized.
 - Windows x64: VST3, unsigned; requires the [Microsoft Visual C++ v14 x64 Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
 
-Validation (Windows x64): built natively with MSVC on windows-2022 and tested with CTest by the
-repository's release workflow; the result is recorded on the GitHub release.
+Validation (Windows x64): native MSVC build on windows-2022 and CTest 1/1 passed; the packaged VST3
+is a PE32+ x86-64 DLL exporting `GetPluginFactory`.
 
 Validation (macOS, Apple Silicon): CTest 1/1 passed; both architecture slices verified;
 `auval -v aufx CbCp Cdpg` passed; the VST3 loads in an offline host with the same parameters in the

@@ -127,7 +127,7 @@ double secondHarmonicDb (const std::vector<float>& y)
         }
         return re * re + im * im;
     };
-    // The harmonic sits between bins of this window, so sum the 7 bins around it as the study did.
+    // The harmonic sits between bins of this window, so sum the 7 bins around it.
     auto band = [&] (double hz)
     {
         const double bin = 44100.0 / length;
