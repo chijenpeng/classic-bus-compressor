@@ -7,6 +7,18 @@
 - Hover help for the gain-reduction meter no longer describes the readout.
 - DSP, parameters, parameter ranges, saved state and plug-in identity are unchanged.
 
+Packages:
+
+- macOS Universal: AU and VST3, arm64 + x86_64; ad-hoc signed, not notarized.
+- Windows x64: VST3, unsigned; requires the [Microsoft Visual C++ v14 x64 Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
+
+Validation (Windows x64): native MSVC build on windows-2022 and CTest 1/1 passed; the packaged VST3
+is a PE32+ x86-64 DLL exporting `GetPluginFactory`.
+
+Validation (macOS, Apple Silicon): CTest 1/1 passed; both architecture slices verified;
+`auval -v aufx CbCp Cdpg` passed; the VST3 loads in an offline host with the same parameters in the
+same order as v0.2.0.
+
 ## v0.2.0
 
 Classic Bus Compressor now uses realistic devices in its detector and timing network and has been

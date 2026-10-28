@@ -116,12 +116,13 @@ plug-in folders, explicitly configure with `-DCOPY_PLUGIN_AFTER_BUILD=ON`.
 
 ## Validation
 
-Version 0.2.0 on macOS (Apple Silicon): CTest 1/1 (`classic_bus_test`: transfer curves, timing,
+Version 0.2.1 on macOS (Apple Silicon): CTest 1/1 (`classic_bus_test`: transfer curves, timing,
 harmonics, stereo link, the Wright omega table's error bound and the diode solver), and universal
 arm64 + x86_64 AU and VST3 slices, `auval -v aufx CbCp Cdpg` passed, and the VST3 loads in an
-offline host with the same parameters in the same order as v0.1.0. The measured-unit comparison above is the model's accuracy check;
-the measurements themselves are not part of this repository. The Windows package is built and tested
-by the repository's release workflow. No DAW-host test on an end-user Windows system or an Intel Mac
+offline host with the same parameters in the same order as v0.1.0. The measured-unit comparison
+above is the model's accuracy check; the measurements themselves are not part of this repository.
+On Windows x64, the release workflow builds natively with MSVC on windows-2022 and runs CTest
+(1/1 for 0.2.1). No DAW-host test on an end-user Windows system or an Intel Mac
 runtime test has been performed.
 
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for JUCE, font and SDK notices.
