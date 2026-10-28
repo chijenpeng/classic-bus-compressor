@@ -1,5 +1,12 @@
 # Classic Bus Compressor release notes
 
+## v0.2.1
+
+- The numeric gain-reduction readout ("GR ... dB") under the gain-reduction meter is removed. The
+  meter itself is unchanged: the needle, scale and hood are drawn as before.
+- Hover help for the gain-reduction meter no longer describes the readout.
+- DSP, parameters, parameter ranges, saved state and plug-in identity are unchanged.
+
 ## v0.2.0
 
 Classic Bus Compressor now uses realistic devices in its detector and timing network and has been

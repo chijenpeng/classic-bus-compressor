@@ -293,8 +293,7 @@ GrMeter::GrMeter()
 {
     setHelp (*this, "Gain reduction",
              "How far the compressor is turning the signal down, in dB: it rests at 0 on the right and swings left as it "
-             "works, to 20 dB. Both channels share one reduction. The needle is smoothed; the readout is the reduction "
-             "itself, falling back slowly so it can be read.");
+             "works, to 20 dB. Both channels share one reduction. The needle is smoothed.");
 }
 
 float GrMeter::angleFor (float reductionDb) noexcept
@@ -314,22 +313,20 @@ float GrMeter::radius() const
     return (float) getWidth() * 0.42f / std::sin (kHalfSweep);
 }
 
-void GrMeter::setReading (float newNeedleDb, float newReadoutDb)
+void GrMeter::setReading (float newNeedleDb)
 {
     const bool needleMoved = std::abs (angleFor (newNeedleDb) - angleFor (needleDb)) > 0.0005f;
-    const bool readoutChanged = juce::String (newReadoutDb, 1) != juce::String (readoutDb, 1);
 
-    if (needleMoved || readoutChanged)
+    if (needleMoved)
     {
         needleDb = newNeedleDb;
-        readoutDb = newReadoutDb;
         repaint();
     }
 }
 
 void GrMeter::paint (juce::Graphics& g)
 {
-    // The face, and at its foot the hood over the needle's pivot, which carries the readout.
+    // The face, and at its foot the hood over the needle's pivot.
     const auto faceArea = getLocalBounds().toFloat();
     const auto hood = faceArea.withTop (faceArea.getBottom() - kHoodHeight);
     g.setColour (Theme::face);
@@ -363,15 +360,6 @@ void GrMeter::paint (juce::Graphics& g)
     g.setFont (Theme::titleFont (10.0f));
     g.drawText ("dB", juce::Rectangle<float> (faceArea.getX(), centre.y - r + 35.0f, faceArea.getWidth(), 12.0f),
                 juce::Justification::centred, false);
-
-    // The reduction, as a number.
-    auto readout = hood.reduced (8.0f, 0.0f);
-    g.setColour (Theme::label);
-    g.setFont (Theme::labelFont (8.0f));
-    g.drawText ("GR", readout.removeFromLeft (18.0f), juce::Justification::centredLeft, false);
-    g.setFont (Theme::valueFont (9.0f));
-    g.drawText ((readoutDb >= 0.05f ? minusSign() : juce::String()) + juce::String (readoutDb, 1) + " dB", readout,
-                juce::Justification::centredLeft, false);
 
     // The needle, from its pivot under the hood.
     juce::Graphics::ScopedSaveState state (g);
@@ -496,10 +484,7 @@ void EditorView::updateMeters()
 
     // The needle has the weight of a meter movement: quick to fall in, slower to come back.
     needleDb += (gr - needleDb) * (gr > needleDb ? 0.36f : 0.14f);
-    // The readout rises at once and falls at about 20 dB/s, so it can be read.
-    shownGrDb = juce::jmax (gr, shownGrDb - 0.7f);
-
-    grMeter.setReading (needleDb, shownGrDb);
+    grMeter.setReading (needleDb);
     inBar.setPeak (processor.getInputPeak());
     outBar.setPeak (processor.getOutputPeak());
 }

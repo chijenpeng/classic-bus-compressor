@@ -89,8 +89,8 @@ class GrMeter final : public juce::Component
 public:
     GrMeter();
 
-    /** The needle and the readout (dB of reduction, >= 0). Repaints only when something visible changed. */
-    void setReading (float needleDb, float readoutDb);
+    /** The needle (dB of reduction, >= 0). Repaints only when the needle visibly moved. */
+    void setReading (float needleDb);
     void paint (juce::Graphics&) override;
 
 private:
@@ -99,7 +99,7 @@ private:
     /** Angle (radians, clockwise from 12 o'clock) of a reduction in dB. */
     static float angleFor (float reductionDb) noexcept;
 
-    float needleDb = 0.0f, readoutDb = 0.0f;
+    float needleDb = 0.0f;
 };
 
 /** A thin flat level bar: IN or OUT, a peak in dBFS. */
@@ -142,7 +142,7 @@ private:
     GrMeter grMeter;
     LevelBar inBar, outBar;
 
-    float needleDb = 0.0f, shownGrDb = 0.0f;
+    float needleDb = 0.0f;
     juce::String helpTitle, helpText;
     juce::Rectangle<int> helpArea;
 };
